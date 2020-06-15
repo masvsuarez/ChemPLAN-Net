@@ -4,3 +4,4 @@
 2. Remove Fragments which are not present in the FragKB
 3. Create HIV1 Index
 4. Create Non Binding
+5. Train Data
