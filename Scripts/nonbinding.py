@@ -1,3 +1,12 @@
+"""
+Creates non-binding data
+"""
+
+__author__ = "Michael Suarez"
+__email__ = "masv@connect.ust.hk"
+__copyright__ = "Copyright 2019, Hong Kong University of Science and Technology"
+__license__ = "3-clause BSD"
+
 import pickle
 import numpy as np
 import pandas as pd
