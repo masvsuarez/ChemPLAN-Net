@@ -10,11 +10,13 @@ Download the repository and install relevant python dependencies.
 
 ### Outline of the FragFeatureNet pipeline
 
-#### Training a new instance of the FragFeatureNet given the FEATURE output files on a protein family
+#### Training a new instance of the FragFeatureNet 
+...given the FEATURE output files on a protein family
 
 1. 
 
-#### Testing a pre-trained model of FragFeatureNet given the FEATURE vectors of the query environments and `.sdf` files of query ligands
+#### Testing a pre-trained model of FragFeatureNet 
+...given the FEATURE vectors of the query protein environments and `.sdf` files of query ligands
 
 
 ### Code and data
