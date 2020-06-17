@@ -1,6 +1,6 @@
 # FragFeatureNet
 
-FragFeatureNet relies on previous work done in the [Xuhui Huang Research group](http://compbio.ust.hk/public_html/pmwiki-2.2.8/pmwiki.php?n=Main.HomePage), the [FEATURE framework] (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2559884/) by Russ B Altman and the [NucleicNet] (https://www.nature.com/articles/s41467-019-12920-0) framework by Jordy H Lam.
+FragFeatureNet relies on previous work done in the [Xuhui Huang Research group](http://compbio.ust.hk/public_html/pmwiki-2.2.8/pmwiki.php?n=Main.HomePage), the [FEATURE framework](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2559884/) by Russ B Altman and the [NucleicNet](https://www.nature.com/articles/s41467-019-12920-0) framework by Jordy H Lam.
 
 ## Getting started
 
@@ -10,7 +10,7 @@ Download the repository and install relevant python dependencies.
 
 ## Code and data
 
-###`data/` directory
+### `data/` directory
 
 
 
