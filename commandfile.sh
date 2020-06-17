@@ -11,9 +11,10 @@ __license__ = "3-clause BSD"
 
 SCRIPTHOME='Scripts'		# This is the default location of scripts
 FEATURESPROT='../BinaryModel/DataP_New/PRT.SNW/PRT.SNW.Homogenised.property.pvar'		# This is the default location of the Data
-DATAHOME='DataP_New'				# This is the pre-processed Data home
+DATAHOME='Data'				# This is the pre-processed Data home
 MODELHOME='FNN'				# This is the default location of models
 INQUIRY='Results_test_CDK2'	# This is the inquiry folder
+PROTEINFAMILYACRONYM = 'PRT.SNW'
 
 #Modeloutput
 ModelOut="Results_Prot_New"
@@ -22,7 +23,17 @@ ModelOut="Results_Prot_New"
 MODELNUM="BinaryModel_New00_FULL"
 
 
+### Step 1: FuseData.py
+# Environments to Fuse
 #{"ALI.CT", "ARG.CZ", "ARO.PSEU", "CON.PSEU", "COO.PSEU", "HIS.PSEU", "HYD.OH", "LYS.NZ", "PRO.PSEU", "RES.N", "RES.O", "TRP.NE1"}
+
+python ${SCRIPTHOME}/FuseData.py --datadir ${DATAHOME} --envNewAcronym ${PROTEINFAMILYACRONYM}
+
+### Step 2: ReduceFragments.py
+
+python ${SCRIPTHOME}/ReduceFragments.py --datadir ${DATAHOME} --envNewAcronym ${PROTEINFAMILYACRONYM}
+
+
 
 #===================
 # Train BinaryModel for Protease
