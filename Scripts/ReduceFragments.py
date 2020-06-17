@@ -11,11 +11,18 @@ from argparse import ArgumentParser
 import numpy as np
 import pickle
 
+parser = ArgumentParser(description="Build Files")
+parser.add_argument("--datadir", type=str, default="Data", help="input - XXX.YYY ")
+parser.add_argument("--envNewAcronym", type=str, default="PRT.SNW", help="input - XXX.YYY ")
+
+args = parser.parse_args()
+
+
 # Check the Bound Fragments
 
-BoundFrags = np.loadtxt("../DataP_New/PRT.SNW/PRT.SNW.Homogenised.boundfrags_zeros.txt", delimiter=',')
+BoundFrags = np.loadtxt("../%s/%s/%s.Homogenised.boundfrags_zeros.txt" %(args.datadir, args.envNewAcronym, args.envNewAcronym), delimiter=',')
 
-normalDF = pickle.load(open("../EnsembleModel/Data/GrandCID.dict", "rb"))
+normalDF = pickle.load(open("../%s/GrandCID.dict" %(args.datadir), "rb"))
 
 binding = np.full(BoundFrags.shape,-1)
 mlength = 0
@@ -38,15 +45,15 @@ for j, i in enumerate(binding):
     red_binding[j][:int(indices[j])] = i[i!=-1]
 red_binding = np.delete(red_binding, np.where(indices==0), axis=0)
 
-pickle.dump(red_binding, open("../DataP_New/PRT.SNW/PRT.SNW.binding.mtr", "wb"))
+pickle.dump(red_binding, open("../%s/%s/%s.binding.mtr"  %(args.datadir, args.envNewAcronym, args.envNewAcronym), "wb"))
 
 # Removes environments without binding Fragments
-Features_all = pickle.load(open("DataP_New/PRT.SNW/PRT.SNW.Homogenised.property.pvar", "rb"))
+Features_all = pickle.load(open("../%s/%s/%s.Homogenised.property.pvar"  %(args.datadir, args.envNewAcronym, args.envNewAcronym), "rb"))
 Features_all = np.delete(Features_all, np.where(indices==0), axis=0)
-pickle.dump(Features_all, open("DataP_New/PRT.SNW/PRT.SNW.Homogenised.property.pvar_red", "wb"))
+pickle.dump(Features_all, open("../%s/%s/%s.Homogenised.property.pvar"  %(args.datadir, args.envNewAcronym, args.envNewAcronym), "wb"))
 
 # Removes environment annotiation without binding fragments
-with open("DataP_New/PRT.SNW/PRT.SNW.Homogenised.annotation.txt", "r+") as f:
+with open("../%s/%s/%s.Homogenised.annotation.txt" %(args.datadir, args.envNewAcronym, args.envNewAcronym), "r+") as f:
     lines = f.readlines()
     for i in np.where(indices==0)[0][::-1]:
         del lines[i]
