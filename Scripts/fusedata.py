@@ -11,7 +11,13 @@ __license__ = "3-clause BSD"
 import pickle
 import numpy as np
 import time
+from argparse import ArgumentParser
 
+parser = ArgumentParser(description="Build Files")
+parser.add_argument("--datadir", type=str, default="Data", help="input - XXX.YYY ")
+parser.add_argument("--envNewAcronym", type=str, default="PRT.SNW", help="input - XXX.YYY ")
+
+args = parser.parse_args()
 
 env = 'ALI.CT' # ALI.CT, ARG.CZ, ARO.PSEU, CON.PSEU, COO.PSEU, HIS.PSEU, HYD.OH, LYS.NZ, PRO.PSEU, RES.N, RES.O, TRP.NE1
 env2 = 'ARG.CZ'
@@ -25,7 +31,7 @@ env9 = 'PRO.PSEU'
 env10 = 'RES.N'
 env11 = 'RES.O'
 env12 = 'TRP.NE1'
-envN = 'PRT.SNW'
+envN = args.envNewAcronym
 
 string1 = 'Homogenised.annotation.txt'
 string2 = 'Homogenised.boundfrags.txt'
@@ -35,22 +41,22 @@ def filenms(filetype):
     filenames = ['%s/%s.%s'  %(env, env, filetype), '%s/%s.%s' %(env2, env2, filetype), '%s/%s.%s' %(env3, env3, filetype), '%s/%s.%s' %(env4, env4, filetype), '%s/%s.%s' %(env5, env5, filetype), '%s/%s.%s' %(env6, env6, filetype), '%s/%s.%s' %(env7, env7, filetype), '%s/%s.%s' %(env8, env8, filetype), '%s/%s.%s' %(env9, env9, filetype), '%s/%s.%s' %(env10, env10, filetype), '%s/%s.%s' %(env11, env11, filetype), '%s/%s.%s' %(env12, env12, filetype)]
     return filenames
 
-trainNew = pickle.load(open("../DataP_New/"+filenms(string3)[0], "rb"))
+trainNew = pickle.load(open("../%s/" %(args.datadir) +filenms(string3)[0], "rb"))
 print(trainNew.shape)
 for i in filenms(string3)[1:]:
-    train2 = pickle.load(open("../DataP_New/"+i, "rb"))
+    train2 = pickle.load(open("../%s/" %(args.datadir) +i, "rb"))
     trainNew = np.append(trainNew, train2, axis =0)
     print(trainNew.shape)
-pickle.dump(trainNew, open("../DataP_New/"+"%s/%s.Homogenised.property.pvar" %(envN, envN), "wb"))
+pickle.dump(trainNew, open("../%s/" %(args.datadir) +"%s/%s.Homogenised.property.pvar" %(envN, envN), "wb"))
     
-with open("../DataP_New/"+'%s/%s.Homogenised.annotation.txt'  %(envN, envN), 'w') as outfile:
+with open("../%s/" %(args.datadir) +'%s/%s.Homogenised.annotation.txt'  %(envN, envN), 'w') as outfile:
     for fname in filenms(string1):
-        with open("../DataP_New/"+fname) as infile:
+        with open("../%s/" %(args.datadir)+fname) as infile:
             outfile.write(infile.read())
             
-with open("../DataP_New/"+'%s/%s.Homogenised.boundfrags.txt'  %(envN, envN), 'w') as outfile:
+with open("../%s/" %(args.datadir)+'%s/%s.Homogenised.boundfrags.txt'  %(envN, envN), 'w') as outfile:
     for fname in filenms(string2):
-        with open("../DataP_New/"+fname) as infile:
+        with open("../%s/" %(args.datadir) +fname) as infile:
             outfile.write(infile.read())        
 
 print('bound created')
