@@ -15,11 +15,11 @@ Download the repository and install relevant python dependencies.
 
 1. Save the individual Environment `annotation.txt`, `boundfrags.txt` and `property.pvar` FEATURE Data files in the `Data` directory. Make sure they are saved in the format of `Data/Env/Env.file`, where `file` corresponds to one of the three file names above and `Env` corresponds to one each of the following: `ALI.CT, ARG.CZ, ARO.PSEU, CON.PSEU, COO.PSEU, HIS.PSEU, HYD.OH, LYS.NZ, PRO.PSEU, RES.N, RES.O, TRP.NE1`. `fusedata.py` Script has to be altered if not all environments are present.
 E.g. 
-* `data/`
-    *`ALI.CT/`
-        * `ALI.CT.annotation.txt`
-        * `ALI.CT.boundfrags.txt`
-        * `ALI.CT.property.pvar`
+- `data/`
+    - `ALI.CT/`
+        - `ALI.CT.annotation.txt`
+        - `ALI.CT.boundfrags.txt`
+        - `ALI.CT.property.pvar`
 
 2. Run `fusedata.py` to merge the files of the environments into three large protein family files. Select an acronym for the merged files, i.e. `PRT.SNW` for Proteases New, or `KIN.ALL` for All Kinases.
 
