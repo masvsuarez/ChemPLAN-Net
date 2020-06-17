@@ -13,10 +13,15 @@ Download the repository and install relevant python dependencies.
 #### Training a new instance of the FragFeatureNet 
 ...given the FEATURE output files on a protein family
 
-1. Save the individual Environment `annotation.txt`, `boundfrags.txt` and `property.pvar` FEATURE Data files in the `Data` directory. Make sure they are saved in the format of `Data/Env/Env.file`, where `file` corresponds to one of the three file names above and `Env` corresponds to one each of the following: `ALI.CT, ARG.CZ, ARO.PSEU, CON.PSEU, COO.PSEU, HIS.PSEU, HYD.OH, LYS.NZ, PRO.PSEU, RES.N, RES.O, TRP.NE1`. `fusedata.py` Script has to be altered if not all environments are present.
-```tree
+1. Save the individual Environment `annotation.txt` (PDB-ID and Environment Location Annotation), `boundfrags.txt` (Binding Fragment CIDs) and `property.pvar` (Environment Feature Vectors in binary file) FEATURE Data files in the `Data` directory. Make sure they are saved in the format of `Data/Env/Env.file`, where `file` corresponds to one of the three file names above and `Env` corresponds to one each of the following: `ALI.CT, ARG.CZ, ARO.PSEU, CON.PSEU, COO.PSEU, HIS.PSEU, HYD.OH, LYS.NZ, PRO.PSEU, RES.N, RES.O, TRP.NE1`. The `FuseData.py` Script has to be altered if not all environments are present.
+
+1.1 Save the Fragment-base Dictionary as `GrandCID.dict` (Pandas Dictionary) in the `Data` Directory.
+
+E.g.
+```
 .
-├── `data/`
+├── `Data/`
+│   ├── `GrandCID.dict`
 │   ├── `ALI.CT/`
 │   │   ├── `ALI.CT.annotation.txt`
 │   │   ├── `ALI.CT.boundfrags.txt`
@@ -25,9 +30,11 @@ Download the repository and install relevant python dependencies.
 
 ```
 
-2. Run `fusedata.py` to merge the files of the environments into three large protein family files. Select an acronym for the merged files, i.e. `PRT.SNW` for Proteases New, or `KIN.ALL` for All Kinases.
+2. Run `FuseData.py` to merge the files of the environments into three large protein family files. Select an acronym for the merged files, i.e. `PRT.SNW` for Proteases New, or `KIN.ALL` for All Kinases.
 
+3. Environments that contain Fragments not in the original Fragment Database have to be removed. The merged `annotation.txt`, `boundfrags.txt` and `property.pvar` files will be permanently altered, so make a copy before executing this script. Run `ReduceFragments.py`. Now your Environments, Fragments and Annotations are ready for pre-processing.
 
+4. Find the Indices of the Protein of your choice through the annotation file for removal or specialised training/validation. 
 
 
 #### Testing a pre-trained model of FragFeatureNet 
@@ -40,8 +47,6 @@ Download the repository and install relevant python dependencies.
 
 
 
-1. Start with fusing the data into one file using Fusedata.py
-2. Remove Fragments which are not present in the FragKB
 3. Create HIV1 Index
 4. Create Non Binding
 5. Train Data
