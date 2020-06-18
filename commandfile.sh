@@ -9,21 +9,18 @@ __email__ = "masv@connect.ust.hk"
 __copyright__ = "Copyright 2019, Hong Kong University of Science and Technology"
 __license__ = "3-clause BSD"
 
+#Change things here
+
 PROTEINFAMILYACRONYM = 'PRT.SNW'    # Choose a Acronym in the format of XXX.YYY for your Data
-SCRIPTHOME='Scripts'		# This is the default location of scripts
-DATAHOME='Data'				# This is the pre-processed Data home
-MODELHOME='FNN'				# This is the default location of models
+SCRIPTHOME='Scripts'		    # This is the default location of scripts
+DATAHOME='Data'				    # This is the pre-processed Data home
+MODELHOME='FNN'				    # This is the default location of models
+ModelOut="Results_Protease"     #Modeloutput
+MODELNUM="BinaryModel_v00_FULL" #Modelname
+INQUIRY='Results_test_CDK2'	    # This is the inquiry folder - Currently Not in Use
 
+#Dont Change
 FEATURESPROT='${DATAHOME}/${PROTEINFAMILYACRONYM}/${PROTEINFAMILYACRONYM}.Homogenised.property.pvar'    # This is the default location of the FeatureVectors
-
-
-INQUIRY='Results_test_CDK2'	# This is the inquiry folder
-
-#Modeloutput
-ModelOut="Results_Protease"
-
-#Modelname
-MODELNUM="BinaryModel_v00_FULL"
 
 
 ###
