@@ -7,6 +7,7 @@ __email__ = "masv@connect.ust.hk"
 __copyright__ = "Copyright 2019, Hong Kong University of Science and Technology"
 __license__ = "3-clause BSD"
 
+from argparse import ArgumentParser
 import pickle
 import numpy as np
 import pandas as pd
@@ -14,21 +15,25 @@ from rdkit.Chem import AllChem
 from rdkit import DataStructs
 from rdkit import Chem
 
-Features_all = pickle.load(open("DataP_New/PRT.SNW/PRT.SNW.Homogenised.property.pvar", "rb"))
+parser = ArgumentParser(description="Build Files")
+parser.add_argument("--datadir", type=str, default="Data", help="input - XXX.YYY ")
+parser.add_argument("--envNewAcronym", type=str, default="PRT.SNW", help="input - XXX.YYY ")
+
+args = parser.parse_args()
+
+Features_all = pickle.load(open("../%s/%s/%s.Homogenised.property.pvar" %(args.datadir, args.envNewAcronym, args.envNewAcronym), "rb"))
 
 #Fragments bound per environment
 
-binding = pickle.load(open("DataP_New/PRT.SNW/PRT.SNW.binding.mtr", "rb"))
-notbinding = pickle.load(open("DataP_New/PRT.SNW/PRT.SNW.notbinding.mtr", "rb"))
-
+binding = pickle.load(open("../%s/%s/%s.binding.mtr"  %(args.datadir, args.envNewAcronym, args.envNewAcronym), "rb"))
+notbinding = pickle.load(open("../%s/%s/%s.nonbinding.mtr"  %(args.datadir, args.envNewAcronym, args.envNewAcronym), "rb"))
 
 # Indices of relevant HIV-1 Homologs and Identities
 
-HIVIndx = pickle.load(open("DataP_New/PRT.SNW/PRT.SNW.Homogenised.HIV1ProteaseIndx_99.mtr", "rb"))
-HIVHomoIndx = pickle.load(open("DataP_New/PRT.SNW/PRT.SNW.Homogenised.HIV1ProteaseIndx_70.mtr", "rb"))
+HIVIndx = pickle.load(open('../%s/%s/%s.TargetProteinIndx.mtr' %(args.datadir, args.envNewAcronym, args.envNewAcronym), "rb"))
+HIVHomoIndx = pickle.load(open('../%s/%s/%s.TargetProteinIndx_70.mtr' %(args.datadir, args.envNewAcronym, args.envNewAcronym), "rb"))
 
-
-normalDF = pickle.load(open("../EnsembleModel/Data/GrandCID.dict", "rb"))
+normalDF = pickle.load(open("../%s/GrandCID.dict" %(args.datadir), "rb"))
 
 def morgfing(mol):
     return AllChem.GetMorganFingerprintAsBitVect(mol, 2, nBits=1024)
@@ -82,8 +87,8 @@ train_FF = FFcreator(train_FF, train_b_f, ProtIndx)
 
 print(test_FF.shape, train_FF.shape)
 
-pickle.dump(train_FF, open("DataP_New/train_FF.mtr", "wb"))
-pickle.dump(test_FF, open("DataP_New/test_FF.mtr", "wb"))
+pickle.dump(train_FF, open("../%s/train_FF.mtr" %(args.datadir), "wb"))
+pickle.dump(test_FF, open("../%s/test_FF.mtr" %(args.datadir), "wb"))
 
 #creates the actual Fingerprint Vectors
 
@@ -100,14 +105,14 @@ def createData(FragIndx, numb):
     return out
 
 train_b_Vec = createData(train_b, train_b_f)
-pickle.dump(train_b_Vec, open("DataP_New/train_b_Vec.mtr", "wb"))
+pickle.dump(train_b_Vec, open("../%s/train_b_Vec.mtr" %(args.datadir), "wb"))
 
 train_nb_Vec = createData(train_nb, train_nb_f)
-pickle.dump(train_nb_Vec, open("DataP_New/train_nb_Vec.mtr", "wb"))
+pickle.dump(train_nb_Vec, open("../%s/train_nb_Vec.mtr" %(args.datadir), "wb"))
 
 
 test_b_Vec = createData(test_b, test_b_f)
-pickle.dump(test_b_Vec, open("DataP_New/test_b_Vec.mtr", "wb"))
+pickle.dump(test_b_Vec, open("../%s/test_b_Vec.mtr" %(args.datadir), "wb"))
 
 test_nb_Vec = createData(test_nb, test_nb_f)
-pickle.dump(test_nb_Vec, open("DataP_New/test_nb_Vec.mtr", "wb"))
+pickle.dump(test_nb_Vec, open("../%s/test_nb_Vec.mtr" %(args.datadir), "wb"))
