@@ -13,28 +13,27 @@ import pandas as pd
 from rdkit.Chem import AllChem
 from rdkit import DataStructs
 from rdkit import Chem
+from argparse import ArgumentParser
 
+parser = ArgumentParser(description="Build Files")
+parser.add_argument("--datadir", type=str, default="Data", help="input - XXX.YYY ")
+parser.add_argument("--envNewAcronym", type=str, default="PRT.SNW", help="input - XXX.YYY ")
 
-Envmt = 'DataP_New/PRT.SNW/PRT.SNW.Homogenised.boundfrags_zeros.txt'
-#../EnsembleModel/Data/KIN.ALL/KIN.ALL.Homogenised.boundfrags_zeros.txt
+args = parser.parse_args()
 
-#BoundFrags = np.loadtxt(Envmt, delimiter=',')
-binding = pickle.load(open("DataP_New/PRT.SNW/PRT.SNW.binding.mtr", "rb"))
+#Load Binding Fragments
+binding = pickle.load(open("../%s/%s/%s.binding.mtr"  %(args.datadir, args.envNewAcronym, args.envNewAcronym), "rb"))
+normalDF = pickle.load(open("../%s/GrandCID.dict" %(args.datadir), "rb"))
 
-normalDF = pickle.load(open("../EnsembleModel/Data/GrandCID.dict", "rb"))
-
-# binding = np.full(BoundFrags.shape,-1)
-# for r, i in enumerate(BoundFrags):
-#     for c, j in enumerate(i[i!=0]):
-#         binding[r,c]=normalDF.index.get_loc(j)
-        
-notbinding = np.full(binding.shape, -1)
+#Create Non Binding based on 
+notbinding = np.full(binding.shape, -1) # Indices will correspond to the positions in normalDF
 for j,i in enumerate(binding):
     temp = i[i!=-1]
     bind = list(normalDF.iloc[temp]['Mol'])
+    #Create Fingerprints for all the Fragments
     fpsbind = [Chem.RDKFingerprint(x) for x in bind]
     for k,l in enumerate(fpsbind):
-        intlist = np.random.randint(59732,size=30)
+        intlist = np.random.randint(59732,size=50)
         c = list(normalDF.iloc[intlist]['Mol'])
         d = [Chem.RDKFingerprint(x) for x in c]
         for m, n in enumerate(d):
@@ -46,4 +45,4 @@ for j,i in enumerate(binding):
     if j%1000==0:
         print(j)
 
-pickle.dump(notbinding, open("DataP_New/PRT.SNW/PRT.SNW.notbinding.mtr", "wb"))
+pickle.dump(notbinding, open("../%s/%s/%s.nonbinding.mtr"  %(args.datadir, args.envNewAcronym, args.envNewAcronym), "wb"))
