@@ -47,14 +47,14 @@ for i in filenms(string3)[1:]:
     train2 = pickle.load(open("../%s/" %(args.datadir) +i, "rb"))
     trainNew = np.append(trainNew, train2, axis =0)
     print(trainNew.shape)
-pickle.dump(trainNew, open("../%s/" %(args.datadir) +"%s/%s.Homogenised.property.pvar" %(envN, envN), "wb"))
+pickle.dump(trainNew, open("../%s/%s/%s.Homogenised.property.pvar" %(args.datadir, envN, envN), "wb"))
     
-with open("../%s/" %(args.datadir) +'%s/%s.Homogenised.annotation.txt'  %(envN, envN), 'w') as outfile:
+with open("../%s/%s/%s.Homogenised.annotation.txt"  %(args.datadir, envN, envN), 'w') as outfile:
     for fname in filenms(string1):
         with open("../%s/" %(args.datadir)+fname) as infile:
             outfile.write(infile.read())
             
-with open("../%s/" %(args.datadir)+'%s/%s.Homogenised.boundfrags.txt'  %(envN, envN), 'w') as outfile:
+with open("../%s/%s/%s.Homogenised.boundfrags.txt"  %(args.datadir, envN, envN), 'w') as outfile:
     for fname in filenms(string2):
         with open("../%s/" %(args.datadir) +fname) as infile:
             outfile.write(infile.read())        
