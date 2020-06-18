@@ -9,19 +9,24 @@ __email__ = "masv@connect.ust.hk"
 __copyright__ = "Copyright 2019, Hong Kong University of Science and Technology"
 __license__ = "3-clause BSD"
 
+PROTEINFAMILYACRONYM = 'PRT.SNW'    # Choose a Acronym in the format of XXX.YYY for your Data
 SCRIPTHOME='Scripts'		# This is the default location of scripts
-FEATURESPROT='../BinaryModel/DataP_New/PRT.SNW/PRT.SNW.Homogenised.property.pvar'		# This is the default location of the Data
 DATAHOME='Data'				# This is the pre-processed Data home
 MODELHOME='FNN'				# This is the default location of models
+
+FEATURESPROT='${DATAHOME}/${PROTEINFAMILYACRONYM}/${PROTEINFAMILYACRONYM}.Homogenised.property.pvar'    # This is the default location of the FeatureVectors
+
+
 INQUIRY='Results_test_CDK2'	# This is the inquiry folder
-PROTEINFAMILYACRONYM = 'PRT.SNW'
 
 #Modeloutput
-ModelOut="Results_Prot_New"
+ModelOut="Results_Protease"
 
 #Modelname
-MODELNUM="BinaryModel_New00_FULL"
+MODELNUM="BinaryModel_v00_FULL"
 
+
+###
 
 ### Step 1: FuseData.py
 # Environments to Fuse
@@ -29,17 +34,37 @@ MODELNUM="BinaryModel_New00_FULL"
 
 python ${SCRIPTHOME}/FuseData.py --datadir ${DATAHOME} --envNewAcronym ${PROTEINFAMILYACRONYM}
 
-### Step 2: ReduceFragments.py
+### Step 2: ZeropaddingBoundfrags.py
+
+python ${SCRIPTHOME}/ZeropaddingBoundfrags.py --datadir ${DATAHOME} --envNewAcronym ${PROTEINFAMILYACRONYM}
+
+### Step 3: ReduceFragments.py
 
 python ${SCRIPTHOME}/ReduceFragments.py --datadir ${DATAHOME} --envNewAcronym ${PROTEINFAMILYACRONYM}
 
+### Step 4: CreateSimilarityIndex.py
 
+python ${SCRIPTHOME}/CreateSimilarityIndex.py --datadir ${DATAHOME} --envNewAcronym ${PROTEINFAMILYACRONYM}
+
+### Step 5: CreateNonBinding.py
+
+python ${SCRIPTHOME}/CreateNonBinding.py --datadir ${DATAHOME} --envNewAcronym ${PROTEINFAMILYACRONYM}
+
+### Step 6: DataPrep.py
+
+python ${SCRIPTHOME}/DataPrep.py --datadir ${DATAHOME} --envNewAcronym ${PROTEINFAMILYACRONYM}
 
 #===================
-# Train BinaryModel for Protease
+# Train-Test BinaryModel for Protease
 #===================
 
-srun --nodelist=node-2 nohup python ${SCRIPTHOME}/${MODELHOME}/trainOpt2_New_FULL.py ${FEATURESPROT} ${DATAHOME} --save ${ModelOut} --depth 65  -b 512 -lr 0.3 -m 0.01 -d 0.0001 -e 20 --name ${MODELNUM} --ngpu 8 > ${ModelOut}/${MODELNUM}.out &
+srun --nodelist=node-2 nohup python ${SCRIPTHOME}/${MODELHOME}/train_test_model.py ${FEATURESPROT} ${DATAHOME} --save ${ModelOut} --depth 65  -b 512 -lr 0.3 -m 0.01 -d 0.0001 -e 20 --name ${MODELNUM} --ngpu 8 > ${ModelOut}/${MODELNUM}.out &
+
+
+
+
+
+
 
 #================================================================
 
