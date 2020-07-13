@@ -18,6 +18,7 @@ MODELHOME='FNN'				    # This is the default location of models
 ModelOut="Results_Protease"     #Modeloutput
 MODELNUM="BinaryModel_v00_FULL" #Modelname
 INQUIRY='Results_test_CDK2'	    # This is the inquiry folder - Currently Not in Use
+LigandSourceFolder="Ligands_COVID"
 
 #Dont Change
 FEATURESPROT='${DATAHOME}/${PROTEINFAMILYACRONYM}/${PROTEINFAMILYACRONYM}.Homogenised.property.pvar'    # This is the default location of the FeatureVectors
@@ -57,8 +58,13 @@ python ${SCRIPTHOME}/DataPrep.py --datadir ${DATAHOME} --envNewAcronym ${PROTEIN
 
 srun --nodelist=node-2 nohup python ${SCRIPTHOME}/${MODELHOME}/train_test_model.py ${FEATURESPROT} ${DATAHOME} --save ${ModelOut} --depth 65  -b 512 -lr 0.3 -m 0.01 -d 0.0001 -e 20 --name ${MODELNUM} --ngpu 8 > ${ModelOut}/${MODELNUM}.out &
 
+#===================
+# Analyse the Model
+#===================
 
+### Step 1: Fragmentise.py
 
+python ${SCRIPTHOME}/Fragmentise.py --ligandfolder ${LigandSourceFolder} --datadir ${DATAHOME}
 
 
 
