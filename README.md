@@ -40,8 +40,19 @@ E.g.
 
 7. Prepare Data into Format required for the Training of the Network. Run `DataPrep.py`.
 
+#### Training the network
 
-#### Testing a pre-trained model of FragFeatureNet 
+Run `FNN/train_test_model.py` with adequate hyperparameters on the training and testing data. If you want to train the model on the complete data and conduct the queries afterwards run `FNN/train_model.py`. 
+
+
+#### Testing a pre-trained model of FragFeatureNet
+
+1. Save the Ligands to be cross-referenced as in a `Ligands` directory. Run `Fragmentise.py`. You might want to change the number of parallel processes on line 93 depending on your systems. 
+
+2. Save your `AllQuery.df` containing the query Feature Vectors in the `Data` directory. This Dataframe is obtained by the EnsFragFeature code as output of fpocket given the query PDB structures. TODO: Implement this here as well.
+
+3. 
+
 ...given the FEATURE vectors of the query protein environments and `.sdf` files of query ligands
 
 
