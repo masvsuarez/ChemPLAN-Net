@@ -18,7 +18,7 @@ MODELHOME='FNN'				    # This is the default location of models
 ModelOut="Results_Protease"     #Modeloutput
 MODELNUM="BinaryModel_v00_FULL" #Modelname
 INQUIRY='Results_test_CDK2'	    # This is the inquiry folder - Currently Not in Use
-LigandSourceFolder="Ligands_COVID"
+LigandSourceFolder="Ligands"
 
 #Dont Change
 FEATURESPROT='${DATAHOME}/${PROTEINFAMILYACRONYM}/${PROTEINFAMILYACRONYM}.Homogenised.property.pvar'    # This is the default location of the FeatureVectors
