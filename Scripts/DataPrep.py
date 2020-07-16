@@ -16,7 +16,7 @@ from rdkit import DataStructs
 from rdkit import Chem
 
 parser = ArgumentParser(description="Build Files")
-parser.add_argument("--datadir", type=str, default="Data", help="input - XXX.YYY ")
+parser.add_argument("--datadir", type=str, default="Data", help="Data directory")
 parser.add_argument("--envNewAcronym", type=str, default="PRT.SNW", help="input - XXX.YYY ")
 
 args = parser.parse_args()
