@@ -47,13 +47,11 @@ Run `FNN/train_test_model.py` with adequate hyperparameters on the training and 
 
 #### Testing a pre-trained model of FragFeatureNet
 
-1. Save the Ligands to be cross-referenced as in a `Ligands` directory. Run `Fragmentise.py`. You might want to change the number of parallel processes on line 93 depending on your systems. 
+1. Save the Ligands to be cross-referenced as in a `Ligands` directory as `.sdf` files of query ligands. Run `Fragmentise.py`. You might want to change the number of parallel processes on line 93 depending on your systems. 
 
-2. Save your `AllQuery.df` containing the query Feature Vectors in the `Data` directory. This Dataframe is obtained by the EnsFragFeature code as output of fpocket given the query PDB structures. TODO: Implement this here as well.
+2. Save your `AllQuery.df` containing the query Feature Vectors in the `Data` directory. This Dataframe is obtained by the EnsFragFeature code as output of fpocket given the query PDB structures. TODO: Implement this here as well. Make sure you reduced the Query Vectors by running the `ReduceFEATUREQueryVectors.ipynb` in your respective EnsFragFeature directory.
 
-3. 
-
-...given the FEATURE vectors of the query protein environments and `.sdf` files of query ligands
+3. Run `AnalyseGPU.py` to obtain the binding probabilities in pickled `.mat` files.
 
 
 ### Code and data
