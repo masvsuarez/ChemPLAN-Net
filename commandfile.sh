@@ -66,8 +66,13 @@ srun --nodelist=node-2 nohup python ${SCRIPTHOME}/${MODELHOME}/train_test_model.
 
 python ${SCRIPTHOME}/Fragmentise.py --ligandfolder ${LigandSourceFolder} --datadir ${DATAHOME}
 
+### Step 2: Run the ReduceFEATUREQueryVectors.ipynb.ipynb in the respective directories of EnsFragFeature. Take note of the number of FeatureVectors in the reduced file.
 
+no_FeatureVectors=300
 
+### Step 3: AnalyseGPU.py 
+
+python ${SCRIPTHOME}/AnalyseGPU.py --datadir ${DATAHOME} --save ${ModelOut} --name ${MODELNUM}
 
 #================================================================
 
