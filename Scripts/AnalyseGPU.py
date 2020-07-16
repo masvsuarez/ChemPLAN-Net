@@ -9,10 +9,19 @@ import torch.utils.data as utils
 import numpy as np
 import time
 from argparse import ArgumentParser
+import sys
 
 '''
 Checks the query environments for matching fragments and returns a list of probabilities 
 '''
+
+parser = ArgumentParser(description="Build Files")
+parser.add_argument('interval', type=int, nargs='+', help='Decrease learning rate at these epochs.')
+parser.add_argument("--datadir", type=str, default="Data", help="Data directory")
+parser.add_argument('--save', '-s', type=str, default='./outputmodels', help='Folder with trained model')
+parser.add_argument('--name', type=str, default='model', help='Your models name')
+args = parser.parse_args()
+
 
 # Option 1: testing the existing FF Vectors from the co-crystal structures
 #load the query feature vectors 
@@ -23,15 +32,16 @@ Checks the query environments for matching fragments and returns a list of proba
 
 # Option 2: testing HIV_Protease f_pocket output
 
-AQ = pickle.load(open("COVID19_all_envs.df", "rb"))
+AQ = pickle.load(open("%s/AllQuery.df" %args.datadir, "rb"))
 testing = AQ.iloc[:,8:].values.astype(float)
-testing = testing[750:900]
+
+testing = testing[args.interval[0]:args.interval[1]]
 
 # normalise query input FF Vectors
 start = time.time()
-mean = pickle.load(open("COVID_mean.mtr", "rb"))
-std = pickle.load(open("COVID_std.mtr", "rb"))
-for i in range (480):
+mean = pickle.load(open("%s/COVID_mean.mtr" %args.datadir, "rb"))
+std = pickle.load(open("%s/COVID_std.mtr" %args.datadir, "rb"))
+for i in range(480):
     if std[i] != 0:
         testing[:,i] = (testing[:,i] - mean[i])/std[i]
     else:
@@ -73,7 +83,7 @@ print("Loaded Data")
 
 # load the network with correct parameters
 net = FeatureResNeXt(8, 65, 8, 4)
-loaded_state_dict = torch.load("Results_Prot_New/BinaryModel_New00_FULL_final.pytorch")
+loaded_state_dict = torch.load(os.path.join(args.save, args.name + '_final.pytorch'))
 #update model with weights from trained model
 temp = {}
 for key, val in list(loaded_state_dict.items()):
@@ -99,4 +109,4 @@ for batch_idx, (X,X2) in enumerate(test_loader):
         coll[batch_idx*512:] = output.data.cpu().numpy().reshape(X.shape[0])
         
 print("Done. Now saving")
-pickle.dump(coll, open("Analysis/COVID19_coll_noEnv%s_%s.mat"%(750, 900), "wb"))
+pickle.dump(coll, open("%s/%s_Probabilities_noEnv%s_%s.mat"%(args.datadir, args.name, args.interval[0], args.interval[1]), "wb"))
