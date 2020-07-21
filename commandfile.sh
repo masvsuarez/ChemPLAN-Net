@@ -4,14 +4,14 @@
 #                                                                     
 ##############################################################################
 
-__author__ = "Michael Suarez"
-__email__ = "masv@connect.ust.hk"
-__copyright__ = "Copyright 2019, Hong Kong University of Science and Technology"
-__license__ = "3-clause BSD"
+__author__="Michael Suarez"
+__email__="masv@connect.ust.hk"
+__copyright__="Copyright 2019, Hong Kong University of Science and Technology"
+__license__="3-clause BSD"
 
 #Change things here
 
-PROTEINFAMILYACRONYM = 'PRT.SNW'    # Choose a Acronym in the format of XXX.YYY for your Data
+PROTEINFAMILYACRONYM ='PRT.SNW'    # Choose a Acronym in the format of XXX.YYY for your Data
 SCRIPTHOME='Scripts'		    # This is the default location of scripts
 DATAHOME='Data'				    # This is the pre-processed Data home
 MODELHOME='FNN'				    # This is the default location of models
