@@ -53,6 +53,12 @@ Run `FNN/train_test_model.py` with adequate hyperparameters on the training and 
 
 3. Run `AnalyseGPU.py` to obtain the binding probabilities in pickled `.mat` files.
 
+#### Post Analysis
+
+1. Run the `DataPOSTAnalysis.ipynb` notebook to enquire about the probability matrix and plot atom coverage and obtain other statistics.
+
+2. `Ligands` has an example output.
+
 
 ### Code and data
 
