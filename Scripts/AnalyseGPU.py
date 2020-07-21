@@ -4,7 +4,7 @@ import pickle
 import torch
 import torch.nn.functional as F
 import torchvision.transforms as transforms
-from Scripts.FNN.models.model011 import FeatureResNeXt
+from FNN.models.model011 import FeatureResNeXt
 import torch.utils.data as utils
 import numpy as np
 import time
