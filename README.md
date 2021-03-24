@@ -8,9 +8,9 @@ Download the repository and install relevant python dependencies.
 
 - Open the `commandfile.sh` and run the relevant scripts
 
-### Outline of the FragFeatureNet pipeline
+### Outline of the ChemPLAN-Net pipeline
 
-#### Training a new instance of the FragFeatureNet 
+#### Training a new instance of the ChemPLAN-Net 
 ...given the FEATURE output files on a protein family
 
 1. Save the individual Environment `annotation.txt` (PDB-ID and Environment Location Annotation), `boundfrags.txt` (Binding Fragment CIDs) and `property.pvar` (Environment Feature Vectors in binary file) FEATURE Data files in the `Data` directory. Make sure they are saved in the format of `Data/Env/Env.file`, where `file` corresponds to one of the three file names above and `Env` corresponds to one each of the following: `ALI.CT, ARG.CZ, ARO.PSEU, CON.PSEU, COO.PSEU, HIS.PSEU, HYD.OH, LYS.NZ, PRO.PSEU, RES.N, RES.O, TRP.NE1`. The `FuseData.py` Script has to be altered if not all environments are present. Save the Fragment-base Dictionary as `GrandCID.dict` (Pandas Dictionary) in the `Data` Directory.
@@ -45,7 +45,7 @@ E.g.
 Run `FNN/train_test_model.py` with adequate hyperparameters on the training and testing data. If you want to train the model on the complete data and conduct the queries afterwards run `FNN/train_model.py`. 
 
 
-#### Testing a pre-trained model of FragFeatureNet
+#### Testing a pre-trained model of ChemPLAN-Net
 
 1. Save the Ligands to be cross-referenced as in a `Ligands` directory as `.sdf` files of query ligands. Run `Fragmentise.py`. You might want to change the number of parallel processes on line 93 depending on your systems. 
 
